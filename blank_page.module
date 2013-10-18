@@ -17,33 +17,45 @@ function blank_page_help($path, $arg) {
 
 // Form for creating new page
 function blank_page_form($node, &$form_state) {
-  // Create list of form items
-  $form = array();
-
-  
+  // Title of new page
   $form['new_title'] = array(
     '#type' => 'textfield',
     '#title' => t('New Page Title'),
-    '#maxlength' => 50,
+    //'#maxlength' => 50,
   );
+  
+  // Submit Button
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => 'Submit',
+    '#form' => 'new_title',
   );
+  
   
   return $form;
 }
 
 // Validate form input before creating new page
 function blank_page_form_validate($form, &$form_state) {
+  $title = $form_state['values']['new_title'];
     
+  // Ensure title is 50 characters or shorter
+  if(strlen($title) > 50){
+    form_set_error('title', 'Page title is too long. Please choose a shoter one');
+  }
 }
 
 // Process form details
 function blank_page_form_submit($form, &$form_state) {
-    switch($form_state['values']['form_id']) {
-        
-    }
+  drupal_set_message('Calling submission type: ' 
+          . $form['submit']['#form'] . '.');
+  
+  switch($form['submit']['#form']) {
+    case 'new_title' :
+      drupal_set_message('Successfully got to the new page creation in'
+              . 'response area!');
+      break;
+  }
 }
 
 // Create administration page
