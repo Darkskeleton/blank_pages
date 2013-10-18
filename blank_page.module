@@ -15,27 +15,65 @@ function blank_page_help($path, $arg) {
   }  
 }
 
+// Form for creating new page
 function blank_page_form($node, &$form_state) {
-  $type = node_type_get_type($node);
+  // Create list of form items
+  $form = array();
 
-  $form['title'] = array(
-    '#type' => 'textfield',
-    '#title' => check_plain($type->title_label),
-    '#default_value' => !empty($node->title) ? $node->title : '',
-    '#required' => TRUE,
-    '#weight' => -5,
-  );
-
+  
   $form['new_title'] = array(
     '#type' => 'textfield',
     '#title' => t('New Page Title'),
-    '#maxlength' => 127,
+    '#maxlength' => 50,
   );
   $form['submit'] = array(
     '#type' => 'submit',
-    '#title' => t('Submit'),
-    '#default_value' => 'Submit',
+    '#value' => 'Submit',
   );
-
+  
   return $form;
 }
+
+// Validate form input before creating new page
+function blank_page_form_validate($form, &$form_state) {
+    
+}
+
+// Process form details
+function blank_page_form_submit($form, &$form_state) {
+    switch($form_state['values']['form_id']) {
+        
+    }
+}
+
+// Create administration page
+function blank_page_menu() {
+  $items = array();
+    
+  $items['admin/content/blank_page'] = array(
+    'title' => 'Create a blank page',
+    'description' => 'Filling out and submitting this form will allow'
+      . ' you to create a blank page',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('blank_page_form'),
+    'access arguments' => array('administer nodes'),
+    'type'=>MENU_NORMAL_ITEM, // TODO: What is this?
+  );
+  $items['admin/content/blank_page/test_tab'] = array(
+      'title' => 'Test Tab',
+      'description' => 'Tab just to test functionality.',
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'weight' => -10,
+  );
+  $items['admin/content/blank_page/test_tab2'] = array(
+      'title' => 'Test Tab 2',
+      'description' => 'Another tab just to test functionality.',
+      'type' => MENU_DEFAULT_LOCAL_TASK,
+      'weight' => -5,
+  );      
+  
+  return $items;
+}
+
+
+
