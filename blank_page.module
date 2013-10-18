@@ -1,0 +1,41 @@
+<?php
+/**
+ * @file
+ * Creates a new blank page for your Drupal site
+ */
+
+function blank_page_help($path, $arg) {
+  switch($path) {
+    // Main help page
+    case 'admin/help#blank_page':
+      return '<p>' . t('The blank page module presents a form for creating '
+              . 'a blank page. When the form is filled out and submitted, '
+              . 'a new page will be created in the database with no content '
+              . 'on the page.') . '</p>';
+  }  
+}
+
+function blank_page_form($node, &$form_state) {
+  $type = node_type_get_type($node);
+
+  $form['title'] = array(
+    '#type' => 'textfield',
+    '#title' => check_plain($type->title_label),
+    '#default_value' => !empty($node->title) ? $node->title : '',
+    '#required' => TRUE,
+    '#weight' => -5,
+  );
+
+  $form['new_title'] = array(
+    '#type' => 'textfield',
+    '#title' => t('New Page Title'),
+    '#maxlength' => 127,
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#title' => t('Submit'),
+    '#default_value' => 'Submit',
+  );
+
+  return $form;
+}

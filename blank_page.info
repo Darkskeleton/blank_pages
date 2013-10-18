@@ -1,0 +1,4 @@
+name = Blank Page
+description = Creates a permanent blank page for your website with the desired title. Perfect for having a blank canvas to stuff your blocks into.
+core = 7.x
+version = 7.x-dev
